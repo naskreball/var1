@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Конструктор тортов - Золотой Колос</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <img src="https://zolotoykolos.ru/local/templates/zolotoykolos/images/logo.png" alt="Золотой Колос" onerror="this.src='https://via.placeholder.com/200x50/ffffff/9e1f24?text=ЗОЛОТОЙ+КОЛОС'">
+    </header>
+
+    <!-- Информационная панель -->
+    <div class="top-info-bar">
+        <span>Конструктор тортов</span>
+        <span class="separator">•</span>
+        <span>Индивидуальный подход</span>
+    </div>
+
+    <!-- 1. ГЛАВНЫЙ БАННЕР -->
+    <section class="hero-banner">
+        <div class="container">
+            <h1>СОБЕРИТЕ СВОЙ ЭКСКЛЮЗИВНЫЙ ТОРТ</h1>
+            <p>Ответьте на несколько вопросов, и мы рассчитаем предварительную стоимость вашего идеального торта. Все торты готовятся индивидуально под ваш праздник из натуральных ингредиентов.</p>
+        </div>
+    </section>
+
+    <!-- Прогресс-бар -->
+    <div class="progress-wrapper">
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="steps-labels">
+            <span class="step-label active" id="lbl-1">Повод</span>
+            <span class="step-label" id="lbl-2">Форма</span>
+            <span class="step-label" id="lbl-3">Вес</span>
+            <span class="step-label" id="lbl-4">Начинка</span>
+            <span class="step-label" id="lbl-5">Галерея</span>
+            <span class="step-label" id="lbl-6">Надпись</span>
+            <span class="step-label" id="lbl-7">Итог</span>
+        </div>
+    </div>
+
+    <div class="app-container">
+        
+        <!-- Шаг 1. Повод -->
+        <div class="step-view active" id="step1">
+            <h2><span class="step-number">1</span> Выберите повод</h2>
+            <div class="grid" id="event-options">
+                <div class="btn-option" onclick="selectOption('event', 'День Рождения', this)">День Рождения</div>
+                <div class="btn-option" onclick="selectOption('event', 'День Рождения ребёнка', this)">Детский праздник</div>
+                <div class="btn-option" onclick="selectOption('event', 'Юбилей', this)">Юбилей</div>
+                <div class="btn-option" onclick="selectOption('event', 'Свадьба', this)">Свадьба</div>
+                <div class="btn-option" onclick="selectOption('event', 'Выпускной', this)">Выпускной</div>
+                <div class="btn-option" onclick="selectOption('event', 'Корпоратив', this)">Корпоратив</div>
+            </div>
+            <div class="custom-input">
+                <input type="text" id="custom-event" placeholder="Или напишите свой праздник..." oninput="selectCustom('event', this.value)">
+            </div>
+        </div>
+
+        <!-- Шаг 2. Форма -->
+        <div class="step-view" id="step2">
+            <h2><span class="step-number">2</span> Выберите форму торта</h2>
+            <div class="grid grid-cakes" id="shape-options">
+                <div class="btn-option" onclick="selectShape('Круг', this)"><div class="img-placeholder">Круг</div>Круглый</div>
+                <div class="btn-option" onclick="selectShape('Квадрат/Прямоугольник', this)"><div class="img-placeholder">Квадрат</div>Квадратный</div>
+                <div class="btn-option" onclick="selectShape('Фигурный', this)"><div class="img-placeholder">Фигура</div>Фигурный</div>
+                <div class="btn-option" onclick="selectShape('Многоярусный', this)"><div class="img-placeholder">Ярусы</div>Многоярусный</div>
+            </div>
+        </div>
+
+        <!-- Шаг 3. Вес -->
+        <div class="step-view" id="step3">
+            <h2><span class="step-number">3</span> Выберите вес торта</h2>
+            <div class="grid" id="weight-options">
+                <div class="btn-option" onclick="selectWeight(2, this)">2 кг</div>
+                <div class="btn-option" onclick="selectWeight(2.5, this)">2.5 кг</div>
+                <div class="btn-option" onclick="selectWeight(3, this)">3 кг</div>
+                <div class="btn-option" onclick="selectWeight(3.5, this)">3.5 кг</div>
+                <div class="btn-option" onclick="selectWeight(4, this)">4 кг</div>
+                <div class="btn-option" onclick="selectWeight(4.5, this)">4.5 кг</div>
+                <div class="btn-option" onclick="selectWeight(5, this)">5 кг</div>
+            </div>
+            <div class="custom-input">
+                <input type="number" id="custom-weight" placeholder="Свой вес (например 3.2)" min="2" step="0.1" oninput="selectCustomWeight(this.value)">
+            </div>
+            <div class="calc-info" id="calc-info" style="display:none;">
+                🍰 Примерное количество порций (150 г на персону): <b id="portions-count">0</b>
+            </div>
+        </div>
+
+        <!-- Шаг 4. Начинка (ИЗМЕНЕН) -->
+        <div class="step-view" id="step4">
+            <h2><span class="step-number">4</span> Самое вкусное внутри</h2>
+            
+            <div class="filling-layout">
+                <!-- Левая часть: Фото разреза -->
+                <div class="cake-photo-wrapper">
+                    <div class="cake-photo" id="cake-photo-visual">
+                        <span class="photo-text">Выберите начинку</span>
+                    </div>
+                    <p class="cake-hint">Так выглядит торт в разрезе</p>
+                </div>
+
+                <!-- Правая часть: Категории и картинки -->
+                <div class="filling-content">
+                    <div class="filling-categories" id="filling-categories">
+                        <!-- Категории генерируются в JS -->
+                    </div>
+                    <div class="grid filling-grid" id="filling-grid">
+                        <!-- Картинки выбранной категории генерируются в JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Шаг 5. Галерея (ИЗМЕНЕН) -->
+        <div class="step-view" id="step5">
+            <h2><span class="step-number">5</span> Галерея наших тортов</h2>
+            
+            <div class="gallery-tabs" id="gallery-tabs">
+                <button class="g-tab active" onclick="switchGalleryTab('Праздничные', this)">Праздничные</button>
+                <button class="g-tab" onclick="switchGalleryTab('Свадебные', this)">Свадебные</button>
+                <button class="g-tab" onclick="switchGalleryTab('Юбилейные', this)">Юбилейные</button>
+                <button class="g-tab" onclick="switchGalleryTab('Детские', this)">Детские</button>
+                <button class="g-tab" onclick="switchGalleryTab('Корпоративные', this)">Корпоративные</button>
+            </div>
+
+            <div class="grid grid-gallery" id="gallery-grid">
+                <!-- 10 картинок генерируются в JS -->
+            </div>
+
+            <!-- Загрузка своего фото -->
+            <div class="upload-section">
+                <p class="upload-title">Покажите нам, каким он должен быть, ваш идеальный торт</p>
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="file-upload" accept="image/*" onchange="handleFileUpload(event)">
+                    <label for="file-upload" class="upload-label">
+                        <span class="upload-icon">📸</span>
+                        <span>Нажмите или перетащите фото сюда</span>
+                    </label>
+                    <div id="preview-container" class="hidden">
+                        <img id="image-preview" src="" alt="Ваше фото">
+                        <button type="button" class="remove-photo" onclick="removePhoto(event)">✕</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Шаг 6. Надпись -->
+        <div class="step-view" id="step6">
+            <h2><span class="step-number">6</span> Последний штрих</h2>
+            <div class="custom-input">
+                <label>Какая надпись должна быть на торте?</label>
+                <input type="text" id="cake-text" placeholder="Введите текст надписи" oninput="updateSummary()">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="no-text" onchange="toggleNoText(this.checked)">
+                    <label for="no-text">Никакой, он и так прекрасен</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Шаг 7. Итог -->
+        <div class="step-view summary" id="step7">
+            <h2>Ваш эксклюзивный торт</h2>
+            <div class="summary-row"><span>Событие:</span> <b id="sum-event">-</b></div>
+            <div class="summary-row"><span>Форма:</span> <b id="sum-shape">-</b></div>
+            <div class="summary-row"><span>Вес:</span> <b id="sum-weight">-</b></div>
+            <div class="summary-row"><span>Порции:</span> <b id="sum-portions">-</b></div>
+            <div class="summary-row"><span>Состав:</span> <b id="sum-filling">-</b></div>
+            <div class="summary-row"><span>Надпись:</span> <b id="sum-text">-</b></div>
+            <div class="summary-row"><span>Референс:</span> <b id="sum-gallery">-</b></div>
+            <div class="summary-row"><span>Свое фото:</span> <b id="sum-upload">-</b></div>
+            
+            <div class="summary-price" id="price-container">
+                Предварительная стоимость: <span id="sum-price">0</span> руб.
+            </div>
+            
+            <div class="order-form">
+                <div class="grid form-grid">
+                    <div class="form-group"><label>Имя*</label><input type="text" placeholder="Ваше имя"></div>
+                    <div class="form-group"><label>Телефон*</label><input type="tel" placeholder="+7 (___) ___-__-__"></div>
+                </div>
+                <div class="form-group"><label>Дата события</label><input type="date"></div>
+                <div class="form-group">
+                    <label>Способ доставки</label>
+                    <select><option>Самовывоз</option><option>Доставка</option></select>
+                </div>
+                <div class="form-group">
+                    <label>Комментарии</label>
+                    <textarea rows="2" placeholder="Пожелания к торту..."></textarea>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="agree1">
+                    <label for="agree1">Я согласен на обработку персональных данных</label>
+                </div>
+                <button class="btn-submit" onclick="alert('Заявка успешно отправлена!')">ОФОРМИТЬ ЗАКАЗ</button>
+            </div>
+        </div>
+
+        <!-- Навигация -->
+        <div class="nav-buttons" id="nav-buttons">
+            <button class="btn-nav btn-prev" id="prev-btn" onclick="prevStep()" style="display: none;">← Назад</button>
+            <button class="btn-nav btn-next" id="next-btn" onclick="nextStep()">Далее →</button>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
